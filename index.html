@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Analyst & Engineer Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --text: #ffffff;
+      --accent: #45ffb0;
+      --card: #1a1a1a;
+    }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      scroll-behavior: smooth;
+    }
+    header {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    header h1 {
+      font-size: 3rem;
+      animation: fadeInUp 1.5s ease-out;
+    }
+    header h2 {
+      color: var(--accent);
+      animation: fadeInUp 2s ease-out;
+    }
+    .chart-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.1;
+      z-index: 0;
+    }
+    section {
+      padding: 4rem 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 1s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .skills, .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1.5rem;
+    }
+    .skill, .project-card {
+      background-color: var(--card);
+      padding: 1.5rem;
+      border-radius: 1rem;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .skill:hover, .project-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px var(--accent);
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .toggle-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--card);
+      border: none;
+      color: var(--accent);
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <button class="toggle-btn" onclick="toggleTheme()">Toggle Mode</button>
+    <canvas id="bgChart" class="chart-bg"></canvas>
+    <h1>Ahmed Wafi</h1>
+    <h2>Data Analyst & Engineer</h2>
+  </header>
+
+  <section id="about" class="fade-in">
+    <h3>About Me</h3>
+    <p>I specialize in data analytics, statistical modeling, and building ETL pipelines. I love transforming raw data into actionable insights that drive business decisions.</p>
+  </section>
+
+  <section id="skills" class="fade-in">
+    <h3>Skills</h3>
+    <div class="skills">
+      <div class="skill">SQL</div>
+      <div class="skill">Python</div>
+      <div class="skill">Pandas</div>
+      <div class="skill">PowerBI</div>
+    </div>
+  </section>
+
+  <section id="projects" class="fade-in">
+    <h3>Projects</h3>
+    <div class="projects">
+      <div class="project-card">Project<br/><img src="https://via.placeholder.com/100x60" /></div>
+      <div class="project-card">Data Vizualiuation<br/><img src="https://via.placeholder.com/100x60" /></div>
+      <div class="project-card">ETL Pipeline<br/><img src="https://via.placeholder.com/100x60" /></div>
+    </div>
+  </section>
+
+  <section id="contact" class="fade-in">
+    <h3>Contact</h3>
+    <p>Email: <a href="mailto:ahmedwafi@outlook.de" style="color: var(--accent);">ahmedwafi@outlook.de</a></p>
+  </section>
+
+  <footer>
+    &copy; 2025 Ahmed Wafi. All rights reserved.
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    const toggleTheme = () => {
+      if (document.body.style.backgroundColor === 'white') {
+        document.body.style.backgroundColor = 'var(--bg)';
+        document.body.style.color = 'var(--text)';
+      } else {
+        document.body.style.backgroundColor = 'white';
+        document.body.style.color = 'black';
+      }
+    }
+
+    const ctx = document.getElementById('bgChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: Array.from({length: 50}, (_, i) => i),
+        datasets: [{
+          label: '',
+          data: Array.from({length: 50}, () => Math.random() * 100),
+          borderColor: '#45ffb0',
+          borderWidth: 2,
+          pointRadius: 0
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: false,
+        scales: { x: { display: false }, y: { display: false } },
+        plugins: { legend: { display: false } }
+      }
+    });
+  </script>
+</body>
+</html>
